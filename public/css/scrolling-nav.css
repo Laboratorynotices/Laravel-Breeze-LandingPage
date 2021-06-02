@@ -1,0 +1,38 @@
+.navbar{
+	background:transparent !important;
+	    padding: 16px 0;
+}
+.navbar a.nav-link{
+	color:#fff;
+	padding: 5px 15px !important;
+}
+.navbar .nav-link:hover{
+	color:#fff;
+}
+.navbar .nav-link.active{
+	color:#fff;
+}
+.navbar.navbar-bg-onscroll a.nav-link{
+	color:rgba(255,255,255,.5);
+}
+.navbar.navbar-bg-onscroll a.nav-link:hover{
+	color:#fff;
+}
+.navbar.navbar-bg-onscroll a.nav-link.active{
+	color:#fff;
+}
+.navbar-bg-onscroll{
+	background: #232323 !important;
+}
+
+.text-primary{
+	    color: #868686!important;
+}
+
+.navbar-dark .navbar-brand, .navbar-dark .navbar-brand:hover {
+    color: #868686;
+	font-weight:bolder;
+}
+ .navbar-dark .navbar-brand {
+    color: #fff !important;
+}

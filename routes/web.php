@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Основной контроллер
+use App\Http\Controllers\LandingPageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/',
+    [LandingPageController::class, 'view']
+)->name('home');
+
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
