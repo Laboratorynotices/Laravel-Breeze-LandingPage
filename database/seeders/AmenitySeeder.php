@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Service;
+use App\Models\Amenity;
 
-class ServiceSeeder extends Seeder
+class AmenitySeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
@@ -15,7 +15,7 @@ class ServiceSeeder extends Seeder
 	public function run()
 	{
 		// Создадим три записи
-		Service::factory()
+		Amenity::factory()
 			->count(3)
 			->create();
 	}

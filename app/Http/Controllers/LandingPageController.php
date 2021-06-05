@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Service;
 use App\Models\AboutBlock;
+use App\Models\Amenity;
 
 class LandingPageController extends Controller
 {
@@ -15,10 +16,13 @@ class LandingPageController extends Controller
 
 		// Считываем все данные из таблицы "AboutBlock".
 		$about = AboutBlock::all();
+		// Считываем все данные из таблицы "Удобства".
+		$amenities = Amenity::all();
 
 		return view('main')
 			// пересылаем переменные в вид
 			->with('services', $services)
-			->with('about', $about);
+			->with('about', $about)
+			->with('amenities', $amenities);
 	}
 }
