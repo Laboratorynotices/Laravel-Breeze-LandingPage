@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
 		$this->call([
 			ServiceSeeder::class,
 			AboutBlockSeeder::class,
-			AmenitySeeder::class
+			AmenitySeeder::class,
+			PortfolioSeeder::class
 		]);
 	}
 }
