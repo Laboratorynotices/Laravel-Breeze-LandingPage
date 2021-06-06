@@ -10,6 +10,7 @@ use App\Models\Amenity;
 use App\Models\Portfolio;
 use App\Models\PortfolioFilter;
 use App\Models\Employee;
+use App\Models\Exercise;
 
 class LandingPageController extends Controller
 {
@@ -32,6 +33,9 @@ class LandingPageController extends Controller
 		// Считываем все данные из таблицы "Employee".
 		$employees = Employee::all();
 
+		// Считываем все данные из таблицы "Employee".
+		$exercises = Exercise::all();
+
 		return view('main')
 			// пересылаем переменные в вид
 			->with('services', $services)
@@ -39,6 +43,7 @@ class LandingPageController extends Controller
 			->with('amenities', $amenities)
 			->with('portfolios', $portfolios)
 			->with('portfolioFilters', $portfolioFilters)
-			->with('employees', $employees);
+			->with('employees', $employees)
+			->with('exercises', $exercises);
 	}
 }

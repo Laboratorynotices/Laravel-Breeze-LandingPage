@@ -19,48 +19,24 @@
 						</tr>
 						</thead>
 						<tbody>
+
+						@foreach ($exercises as $exercise)
 						<tr data-aos="fade-in" data-aos-easing="linear" data-aos-delay="200">
-							<td>10:00am - 12:00am</td>
+							<td>{{ $exercise->time }}</td>
 							<td>
-								<h6>Rope Skipping</h6>
-								<span class="text-muted">Indoor</span>
+								<h6>{{ $exercise->class }}</h6>
+								<span class="text-muted">{{ $exercise->description }}</span>
 							</td>
 							<td>
-								<h6>$25</h6>
+								<h6>{{ $exercise->price }}</h6>
 								<span class="text-muted">Monthly</span>
 							</td>
 							<td>
 								<a href="#" class="btn btn-primary btn-pill">Join Now</a>
 							</td>
 						</tr>
-						<tr data-aos="fade-in" data-aos-easing="linear" data-aos-delay="300">
-							<td>12:00am - 2:00am</td>
-							<td>
-								<h6>Intensity </h6>
-								<span class="text-muted">BW Training</span>
-							</td>
-							<td>
-								 <h6>$25</h6>
-								<span class="text-muted">Monthly</span>
-							</td>
-							<td>
-								<a href="#" class="btn btn-primary btn-pill">Join Now</a>
-							</td>
-						</tr>
-						<tr data-aos="fade-in" data-aos-easing="linear" data-aos-delay="400">
-							<td>2:00am - 5:00am</td>
-							<td>
-								<h6>Yoga </h6>
-								<span class="text-muted">On the Beach</span>
-							</td>
-							<td>
-								<h6>$25</h6>
-								<span class="text-muted">Monthly</span>
-							</td>
-							<td>
-								<a href="#" class="btn btn-primary btn-pill">Join Now</a>
-							</td>
-						</tr>
+						@endforeach
+
 						</tbody>
 					</table>
 				</div>

@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
 			AboutBlockSeeder::class,
 			AmenitySeeder::class,
 			PortfolioFilterSeeder::class,
-			EmployeeSeeder::class
+			EmployeeSeeder::class,
+			ExerciseSeeder::class
 		]);
 	}
 }
