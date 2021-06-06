@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Portfolio;
+use App\Models\PortfolioFilter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PortfolioFactory extends Factory
+class PortfolioFilterFactory extends Factory
 {
 	/**
 	 * The name of the factory's corresponding model.
 	 *
 	 * @var string
 	 */
-	protected $model = Portfolio::class;
+	protected $model = PortfolioFilter::class;
 
 	/**
 	 * Define the model's default state.
@@ -21,9 +21,10 @@ class PortfolioFactory extends Factory
 	 */
 	public function definition()
 	{
+		$name = $this->faker->unique()->word;
 		return [
-			// Генерирует число от 1 до 8
-			'image' => 'img' . $this->faker->numberBetween(1,8) . '.jpg'
+			'short_name' => $name,
+			'full_name' => ucfirst($name)
 		];
 	}
 }

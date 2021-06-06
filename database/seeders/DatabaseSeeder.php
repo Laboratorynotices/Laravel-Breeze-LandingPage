@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 			ServiceSeeder::class,
 			AboutBlockSeeder::class,
 			AmenitySeeder::class,
-			PortfolioSeeder::class
+			PortfolioFilterSeeder::class
 		]);
 	}
 }
