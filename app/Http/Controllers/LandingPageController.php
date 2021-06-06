@@ -11,6 +11,7 @@ use App\Models\Portfolio;
 use App\Models\PortfolioFilter;
 use App\Models\Employee;
 use App\Models\Exercise;
+use App\Models\Testimonial;
 
 class LandingPageController extends Controller
 {
@@ -33,8 +34,11 @@ class LandingPageController extends Controller
 		// Считываем все данные из таблицы "Employee".
 		$employees = Employee::all();
 
-		// Считываем все данные из таблицы "Employee".
+		// Считываем все данные из таблицы "Занятия".
 		$exercises = Exercise::all();
+
+		// Считываем все данные из таблицы "Отзывы".
+		$testimonials = Testimonial::all();
 
 		return view('main')
 			// пересылаем переменные в вид
@@ -44,6 +48,7 @@ class LandingPageController extends Controller
 			->with('portfolios', $portfolios)
 			->with('portfolioFilters', $portfolioFilters)
 			->with('employees', $employees)
-			->with('exercises', $exercises);
+			->with('exercises', $exercises)
+			->with('testimonials', $testimonials);
 	}
 }

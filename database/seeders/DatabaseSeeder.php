@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
 			AmenitySeeder::class,
 			PortfolioFilterSeeder::class,
 			EmployeeSeeder::class,
-			ExerciseSeeder::class
+			ExerciseSeeder::class,
+			TestimonialSeeder::class
 		]);
 	}
 }
