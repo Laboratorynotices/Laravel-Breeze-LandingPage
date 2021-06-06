@@ -9,6 +9,7 @@ use App\Models\AboutBlock;
 use App\Models\Amenity;
 use App\Models\Portfolio;
 use App\Models\PortfolioFilter;
+use App\Models\Employee;
 
 class LandingPageController extends Controller
 {
@@ -28,12 +29,16 @@ class LandingPageController extends Controller
 		// Считываем все данные из таблицы "Portfolio".
 		$portfolioFilters = PortfolioFilter::all();
 
+		// Считываем все данные из таблицы "Employee".
+		$employees = Employee::all();
+
 		return view('main')
 			// пересылаем переменные в вид
 			->with('services', $services)
 			->with('about', $about)
 			->with('amenities', $amenities)
 			->with('portfolios', $portfolios)
-			->with('portfolioFilters', $portfolioFilters);
+			->with('portfolioFilters', $portfolioFilters)
+			->with('employees', $employees);
 	}
 }
