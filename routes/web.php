@@ -17,16 +17,20 @@ use App\Http\Controllers\LandingPageController;
 */
 
 Route::get('/',
-    [LandingPageController::class, 'view']
+	[LandingPageController::class, 'view']
+)->name('home');
+
+Route::post('/',
+	[LandingPageController::class, 'contact']
 )->name('home');
 
 
 Route::get('/welcome', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+	return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

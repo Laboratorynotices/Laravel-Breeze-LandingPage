@@ -12,10 +12,14 @@ use App\Models\PortfolioFilter;
 use App\Models\Employee;
 use App\Models\Exercise;
 use App\Models\Testimonial;
+use Mail;
 
 class LandingPageController extends Controller
 {
-	public function view() {
+	/**
+	 * Считывает данные из базы данных и вызывает вид страницы приземления.
+	 */
+	public function view($data = array()) {
 		// Считываем все данные из таблицы "Сервисы".
 		$services = Service::all();
 
@@ -40,7 +44,7 @@ class LandingPageController extends Controller
 		// Считываем все данные из таблицы "Отзывы".
 		$testimonials = Testimonial::all();
 
-		return view('main')
+		return view('main', $data)
 			// пересылаем переменные в вид
 			->with('services', $services)
 			->with('about', $about)
@@ -51,4 +55,44 @@ class LandingPageController extends Controller
 			->with('exercises', $exercises)
 			->with('testimonials', $testimonials);
 	}
+
+	/**
+	 * Обрабатывает данные от формы, а потом передаёт управление в обычный метод.
+	 */
+	public function contact(Request $request) {
+		/*
+		* Валидация данных, полученных из формы.
+		* Если валидация не проходится, то возвращается к прошлой странице с формой.
+		*/
+		$result = $this->validate($request, [
+			'name' => 'required|max:255',
+			'email' => 'required|email',
+			'message' => 'required|min:5'
+		]);
+
+		/*
+		* Отправка почты
+		*/
+		Mail::send(
+			'layouts\mail',
+			['data'=>$result],
+			function($message) use ($result) {
+				$mail_admin = $result['email']; //env('MAIL_ADMIN');
+				$message->from($result['email'], $result['name']);
+				$message->to($mail_admin)->subject('Question');
+			}
+		);
+
+		// Собираем данные, чтобы передать их в шаблон
+		$data = array(
+			'name' => $result['name'],
+			'email' => $result['email'],
+			'message' => $result['message'],
+			'status' => ($result) ? 'Email is send' : ''
+		);
+
+		// Передаём данные в метод для отображения страницы по умолчанию
+		return $this->view($data);
+	}
+
 }
