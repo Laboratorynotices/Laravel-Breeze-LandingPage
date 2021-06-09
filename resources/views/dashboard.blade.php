@@ -1,17 +1,69 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+	<x-slot name="header">
+		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
+			{{ __('Dashboard') }}
+		</h2>
+	</x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row m-6 p-3 bg-white shadow rounded">
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\Service;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\AboutBlock;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\Amenity;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\Portfolio;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\PortfolioFilter;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\Employee;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\Exercise;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					use App\Models\Testimonial;
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
+				<a href="#" class="btn btn-light shadow">
+					other
+				</a>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- div class="py-12">
+		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+				<div class="p-6 bg-white border-b border-gray-200">
+					You're logged in!
+				</div>
+			</div>
+		</div>
+	</div -->
 </x-app-layout>
+ 
