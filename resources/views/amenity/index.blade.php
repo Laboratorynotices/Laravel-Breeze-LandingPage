@@ -39,7 +39,9 @@
 								</a>
 							</td>
 							<td>
-								<i class="ti-trash d-block text-primary"></i>
+								<a href="{{ route('amenity.destroy', array('amenity' => $amenity->id)) }}">
+									<i class="ti-trash d-block text-primary"></i>
+								</a>
 							</td>
 						</tr>
 					@endforeach

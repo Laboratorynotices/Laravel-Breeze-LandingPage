@@ -89,7 +89,17 @@ Route::prefix('admin')
 			[AmenityController::class, 'store']
 		)
 		// наименование маршрута
-		->name('amenity.store');						
+		->name('amenity.store');
+
+		// Удаление записи
+		Route::get('/destroy/{amenity}',
+			// указание на контроллер и метод
+			[AmenityController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('amenity')
+		// наименование маршрута
+		->name('amenity.destroy');
 	});
 
 	// Место для остальных блоков

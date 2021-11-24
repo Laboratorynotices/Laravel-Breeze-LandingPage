@@ -105,9 +105,13 @@ class AmenityController extends Controller
      * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Amenity $amenity)
-    {
-        //
+    public function destroy(Amenity $amenity) {
+        // Удаляем данные
+        $amenity->delete();
+
+        // @TODO обработка, если удаление данных не получится
+
+        return redirect()->route('amenity.index');
     }
 
 
