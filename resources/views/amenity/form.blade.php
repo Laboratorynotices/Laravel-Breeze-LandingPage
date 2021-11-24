@@ -1,7 +1,12 @@
 <x-app-layout>
 	<x-slot name="header">
 		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
+			@isset($amenity->id)
 			{{ __('Amenities Edit') }}
+			@endisset
+			@empty($records)
+			{{ __('Amenities Create') }}
+			@endempty
 		</h2>
 	</x-slot>
 
@@ -20,12 +25,20 @@
 						data-aos="fade-up"
 						data-aos-easing="linear"
 						data-aos-delay="200"
-						action="{{ route('amenity.update', array('amenity' => $amenity->id)) }}"
+						action="{{
+							isset($amenity->id) ?
+								route('amenity.update', array('amenity' => $amenity->id)) :
+								route('amenity.store')
+							 
+						}}"
 						method="post"
 						enctype="multipart/form-data"
 					>
 						{{csrf_field()}}
+						@isset($amenity->id)
 						<input name="id" type="hidden" value="{{ $amenity->id }}" />
+						@endisset
+
 
 						<div class="control-group">
 							<div class="form-group mb-4">
@@ -34,7 +47,11 @@
 								@endif
 								<input type="text" class="form-control form-control-lg" 
 									placeholder="Title"
-									@isset($amenity->title) value="{{ $amenity->title }}" @endisset
+									value="{{
+										old('title') ?
+										old('title') :
+										$amenity->title ?? ''
+									}}"
 									id="title"
 									required data-validation-required-message="Please enter title"
 									maxlength="50" data-validation-maxlength-message="Max 50 characters"
@@ -50,15 +67,23 @@
 								@endif
 								<div class="row">
 									<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-										<i class="{{ $amenity->icon }} display-4 d-block text-primary"></i>
+										<i class="{{
+												old('icon') ?
+												old('icon') :
+												$amenity->icon ?? 'ti-layout-sidebar-none'
+											}} display-4 d-block text-primary"></i>
 									</div>
 									<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
 										<input type="text" class="form-control form-control-lg" 
 											placeholder="Icon"
-											@isset($amenity->icon) value="{{ $amenity->icon }}" @endisset
-											id="icon" required
+											value="{{
+												old('icon') ?
+												old('icon') :
+												$amenity->icon ?? ''
+											}}"
+											id="icon"
 											required data-validation-required-message="Please enter Icon"
-											maxlength="150" data-validation-maxlength-message="Max 150 characters"
+											maxlength="50" data-validation-maxlength-message="Max 50 characters"
 											name="icon"
 										/>
 									</div>
@@ -80,7 +105,11 @@
 									placeholder="Description" id="description" required name="description"
 									data-validation-required-message="Please enter your description" minlength="10"
 									data-validation-minlength-message="Min 10 characters"
-									maxlength="999" style="resize:none">@isset($amenity->description){{ $amenity->description }}@endisset</textarea>
+									maxlength="999" style="resize:none">{{
+												old('description') ?
+												old('description') :
+												$amenity->description ?? ''
+											}}</textarea>
 							</div>
 						</div>
 						<div class="">

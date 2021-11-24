@@ -8,7 +8,7 @@
 	<div class="container bg-white shadow rounded m-6">
 		<div class="row">
 			<div class="col p-3">
-				<a href="#">
+				<a href="{{ route('amenity.create') }}">
 					<i class="ti-support display-4 d-block text-primary mb-2"></i>
 				</a>
 				<table class="table table-striped table-hover">

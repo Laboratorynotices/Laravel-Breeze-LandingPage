@@ -26,9 +26,8 @@ class AmenityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('amenity.form');
     }
 
     /**
@@ -37,9 +36,22 @@ class AmenityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
+
+        // создаём новый объект модели услуг
+        $amenity = new Amenity();
+
+        // заполняем наш объект полученными данными
+        $amenity->fill($input);
+
+        // Сохраняем данные
+        $amenity->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('amenity.index');
     }
 
     /**
@@ -73,10 +85,8 @@ class AmenityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Amenity $amenity) {
-        // @TODO Валидация
-
-        // Считываем входящие данные
-        $input = $request->input();
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
 
         // Обновляем данные модели, которые определили как "fillable"
         $amenity->fill($input);
@@ -98,5 +108,21 @@ class AmenityController extends Controller
     public function destroy(Amenity $amenity)
     {
         //
+    }
+
+
+    /**
+     * Валидация данных, которые получаем от формы
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array()
+     */
+    private function getValidatedData(Request $request) {
+        // @TODO Валидация id???
+        return $request->validate([
+            'title'         => 'required|max:50',
+            'icon'          => 'required|max:50',
+            'description'   => 'required|max:999',
+        ]);
     }
 }
