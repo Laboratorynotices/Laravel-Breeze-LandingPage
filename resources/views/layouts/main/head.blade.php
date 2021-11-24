@@ -20,7 +20,7 @@
 
 	<!-- Vendor Styles -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/font-awesome/css/fontawesome-all.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/slick-carousel/slick.css') }}"> 
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/slick-carousel/slick.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('fonts/themify-icons.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/magnific-popup/magnific-popup.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/hovereffects.css') }}"> 

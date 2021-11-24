@@ -18,6 +18,9 @@
 
 		<!-- Bootstrap Styles -->
 		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+		<!-- Icons Styles -->
+		<link rel="stylesheet" type="text/css" href="{{ asset('fonts/themify-icons.css') }}">
 	</head>
 	<body class="font-sans antialiased">
 		<div class="min-h-screen bg-gray-100">

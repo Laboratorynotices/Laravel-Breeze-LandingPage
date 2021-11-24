@@ -12,9 +12,13 @@ class AmenityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // Считываем все данные из таблицы "Услуги".
+        $amenities = Amenity::all();
+
+        return view('amenity.index')
+            // пересылаем переменные в вид
+            ->with('amenities', $amenities);
     }
 
     /**
