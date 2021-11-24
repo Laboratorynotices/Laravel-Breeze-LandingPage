@@ -59,9 +59,10 @@ class AmenityController extends Controller
      * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Amenity $amenity)
-    {
-        //
+    public function edit(Amenity $amenity) {
+        return view('amenity.form')
+            // пересылаем переменные в вид
+            ->with('amenity', $amenity);
     }
 
     /**
@@ -71,9 +72,21 @@ class AmenityController extends Controller
      * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Amenity $amenity)
-    {
-        //
+    public function update(Request $request, Amenity $amenity) {
+        // @TODO Валидация
+
+        // Считываем входящие данные
+        $input = $request->input();
+
+        // Обновляем данные модели, которые определили как "fillable"
+        $amenity->fill($input);
+
+        // Сохраняем данные
+        $amenity->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('amenity.index');
     }
 
     /**
