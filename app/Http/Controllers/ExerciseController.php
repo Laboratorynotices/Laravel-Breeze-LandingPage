@@ -26,10 +26,9 @@ class ExerciseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
-		//
-	}
+	public function create() {
+        return view('exercise.form');
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -37,10 +36,23 @@ class ExerciseController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
-	{
-		//
-	}
+	public function store(Request $request) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
+
+        // создаём новый объект модели услуг
+        $exercise = new Exercise();
+
+        // заполняем наш объект полученными данными
+        $exercise->fill($input);
+
+        // Сохраняем данные
+        $exercise->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('exercise.index');
+    }
 
 	/**
 	 * Display the specified resource.
@@ -59,10 +71,11 @@ class ExerciseController extends Controller
 	 * @param  \App\Models\Exercise  $exercise
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Exercise $exercise)
-	{
-		//
-	}
+	public function edit(Exercise $exercise) {
+        return view('exercise.form')
+            // пересылаем переменные в вид
+            ->with('exercise', $exercise);
+    }
 
 	/**
 	 * Update the specified resource in storage.
@@ -71,10 +84,20 @@ class ExerciseController extends Controller
 	 * @param  \App\Models\Exercise  $exercise
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Exercise $exercise)
-	{
-		//
-	}
+	public function update(Request $request, Exercise $exercise) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
+
+        // Обновляем данные модели, которые определили как "fillable"
+        $exercise->fill($input);
+
+        // Сохраняем данные
+        $exercise->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('exercise.index');
+    }
 
 	/**
 	 * Remove the specified resource from storage.
@@ -89,5 +112,21 @@ class ExerciseController extends Controller
         // @TODO обработка, если удаление данных не получится
 
         return redirect()->route('exercise.index');
+    }
+
+
+    /**
+     * Валидация данных, которые получаем от формы
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array()
+     */
+    private function getValidatedData(Request $request) {
+        return $request->validate([
+            'time'			=> 'required|max:50',
+            'class'			=> 'required|max:100',
+            'description'	=> 'required|max:100',
+            'price'			=> 'required|max:9999|numeric|integer',
+        ]);
     }
 }
