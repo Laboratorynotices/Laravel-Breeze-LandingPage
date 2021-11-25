@@ -12,10 +12,14 @@ class ExerciseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
-	{
-		//
-	}
+	public function index() {
+        // Считываем все данные из таблицы "Занятий".
+        $exercises = Exercise::all();
+
+        return view('exercise.index')
+            // пересылаем переменные в вид
+            ->with('exercises', $exercises);
+    }
 
 	/**
 	 * Show the form for creating a new resource.
@@ -78,8 +82,12 @@ class ExerciseController extends Controller
 	 * @param  \App\Models\Exercise  $exercise
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Exercise $exercise)
-	{
-		//
-	}
+	public function destroy(Exercise $exercise) {
+        // Удаляем данные
+        $exercise->delete();
+
+        // @TODO обработка, если удаление данных не получится
+
+        return redirect()->route('exercise.index');
+    }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\LandingPageController;
 
 use App\Http\Controllers\AmenityController;
 use App\Models\Amenity;
+use App\Http\Controllers\ExerciseController;
+use App\Models\Exercise;
 
 
 /*
@@ -101,6 +103,65 @@ Route::prefix('admin')
 		// наименование маршрута
 		->name('amenity.destroy');
 	});
+
+	// Место для блоков портфолио и сотрудников
+
+
+	// Добавляем префикс 'exercises'. Блок с удобствами.
+	Route::prefix('exercises')->group(function () {
+
+		// Список удобств
+		Route::get('/',
+			[ExerciseController::class, 'index']
+		)->name('exercise.index');
+
+		// Форма для редактирования записи
+		Route::get('/edit/{exercise}',
+			// указание на контроллер и метод
+			[ExerciseController::class, 'edit']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('exercise')
+		// наименование маршрута
+		->name('exercise.edit');
+
+		// Обработка данных, полученных от формы
+		Route::post('/update/{exercise}',
+			// указание на контроллер и метод
+			[ExerciseController::class, 'update']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('exercise')
+		// наименование маршрута
+		->name('exercise.update');
+
+		// Форма для создания новой записи
+		Route::get('/create',
+			// указание на контроллер и метод
+			[ExerciseController::class, 'create']
+		)
+		// наименование маршрута
+		->name('exercise.create');
+
+		// Обработка данных, полученных от формы создания
+		Route::post('/store',
+			// указание на контроллер и метод
+			[ExerciseController::class, 'store']
+		)
+		// наименование маршрута
+		->name('exercise.store');
+
+		// Удаление записи
+		Route::get('/destroy/{exercise}',
+			// указание на контроллер и метод
+			[ExerciseController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('exercise')
+		// наименование маршрута
+		->name('exercise.destroy');
+	});
+
 
 	// Место для остальных блоков
 
