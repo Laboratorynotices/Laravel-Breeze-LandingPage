@@ -10,6 +10,8 @@ use App\Http\Controllers\AmenityController;
 use App\Models\Amenity;
 use App\Http\Controllers\ExerciseController;
 use App\Models\Exercise;
+use App\Http\Controllers\ServiceController;
+use App\Models\Service;
 
 
 /*
@@ -47,7 +49,62 @@ Route::prefix('admin')
 	// объединяем всё в группу
 	->group(function () {
 
-	// Место для блоков услуг и "о нас"
+	// Добавляем префикс 'service'. Блок с сервисами (услугами).
+	Route::prefix('service')->group(function () {
+	
+		// Список удобств
+		Route::get('/',
+			[ServiceController::class, 'index']
+		)->name('service.index');
+	
+		// Форма для редактирования записи
+		Route::get('/edit/{service}',
+			// указание на контроллер и метод
+			[ServiceController::class, 'edit']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('service')
+		// наименование маршрута
+		->name('service.edit');
+	
+		// Обработка данных, полученных от формы
+		Route::post('/update/{service}',
+			// указание на контроллер и метод
+			[ServiceController::class, 'update']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('service')
+		// наименование маршрута
+		->name('service.update');
+	
+		// Форма для создания новой записи
+		Route::get('/create',
+			// указание на контроллер и метод
+			[ServiceController::class, 'create']
+		)
+		// наименование маршрута
+		->name('service.create');
+	
+		// Обработка данных, полученных от формы создания
+		Route::post('/store',
+			// указание на контроллер и метод
+			[ServiceController::class, 'store']
+		)
+		// наименование маршрута
+		->name('service.store');
+	
+		// Удаление записи
+		Route::get('/destroy/{service}',
+			// указание на контроллер и метод
+			[ServiceController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('service')
+		// наименование маршрута
+		->name('service.destroy');
+	});
+
+	// Место для блока "о нас"
 
 	// Добавляем префикс 'amenities'. Блок с удобствами.
 	Route::prefix('amenities')->group(function () {

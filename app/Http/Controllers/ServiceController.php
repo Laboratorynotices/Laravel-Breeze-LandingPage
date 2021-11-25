@@ -12,9 +12,13 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // Считываем все данные из таблицы "Сервисы".
+        $services = Service::all();
+
+        return view('service.index')
+            // пересылаем переменные в вид
+            ->with('services', $services);
     }
 
     /**
@@ -78,8 +82,10 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
-    {
-        //
+    public function destroy(Service $service) {
+        // Удаляем данные
+        $service->delete();
+     
+        return redirect()->route('service.index');
     }
 }
