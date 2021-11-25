@@ -29,7 +29,6 @@
 							isset($exercise->id) ?
 								route('exercise.update', array('exercise' => $exercise->id)) :
 								route('exercise.store')
-							 
 						}}"
 						method="post"
 						enctype="multipart/form-data"
