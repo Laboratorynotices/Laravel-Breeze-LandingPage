@@ -26,9 +26,8 @@ class AboutBlockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('aboutBlock.form');
     }
 
     /**
@@ -37,9 +36,25 @@ class AboutBlockController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
+
+        // Сохраняем загруженную картинку
+        $input['image'] = $this->storeImage($request, 'image', 'about');
+
+        // создаём новый объект модели услуг
+        $aboutBlock = new AboutBlock();
+
+        // заполняем наш объект полученными данными
+        $aboutBlock->fill($input);
+
+        // Сохраняем данные
+        $aboutBlock->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('aboutBlock.index');
     }
 
     /**
@@ -59,9 +74,10 @@ class AboutBlockController extends Controller
      * @param  \App\Models\AboutBlock  $aboutBlock
      * @return \Illuminate\Http\Response
      */
-    public function edit(AboutBlock $aboutBlock)
-    {
-        //
+    public function edit(AboutBlock $aboutBlock) {
+        return view('aboutBlock.form')
+            // пересылаем переменные в вид
+            ->with('aboutBlock', $aboutBlock);
     }
 
     /**
@@ -71,9 +87,24 @@ class AboutBlockController extends Controller
      * @param  \App\Models\AboutBlock  $aboutBlock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AboutBlock $aboutBlock)
-    {
-        //
+    public function update(Request $request, AboutBlock $aboutBlock) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request, true);
+
+        // обновляем картинку, если она была загружена
+        if ($request->hasFile('image')) {
+            $input['image'] = $this->storeImage($request, 'image', 'about');
+        }
+
+        // заполняем наш объект полученными данными
+        $aboutBlock->fill($input);
+
+        // Сохраняем данные
+        $aboutBlock->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('aboutBlock.index');
     }
 
     /**
@@ -87,5 +118,51 @@ class AboutBlockController extends Controller
         $aboutBlock->delete();
      
         return redirect()->route('aboutBlock.index');
+    }
+
+
+    /**
+     * Валидация данных, которые получаем от формы
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool $update - определяет из какого метода вызывается этот метод.
+     * @return array()
+     */
+    private function getValidatedData(Request $request, bool $update = false) {
+        // @TODO Валидация id???
+        return $request->validate([
+            'title'         => 'required|max:100',
+            'image'         =>
+                // При создании записи картинка обязательна, но не при обновлении.
+                ((!$update) ?
+                    'required|' :
+                    '').
+                'image',
+            'text'          => 'required|max:999',
+        ]);
+    }
+
+
+    /**
+     * Сохраняет картинку, загруженную через форму.
+     * Возвращает оригинальное название загруженного файла.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $fieldName - имя поля, через который загружается файл
+     * @param  String $folderName - имя папки, в которую загружается файл
+     * @return String - оригинальное название загруженного файла.
+     */
+    private function storeImage(Request $request, String $fieldName, String $folderName = '') {
+        // обновляем картинку, если она была загружена
+        if ($request->hasFile($fieldName)) {
+            // запоминаем оригинальное название файла
+            $originalName = $request->file($fieldName)->getClientOriginalName();
+            // сохраняем загруженный файл в папку $folderName с оригинальным названием
+            $request->file($fieldName)->storePubliclyAs($folderName, $originalName);
+            // готовим название файла к заполнению в модель.
+            return $originalName;
+        }
+
+        return '';
     }
 }
