@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPageController;
 
 
+use App\Http\Controllers\AboutBlockController;
+use App\Models\AboutBlock;
 use App\Http\Controllers\AmenityController;
 use App\Models\Amenity;
 use App\Http\Controllers\ExerciseController;
@@ -104,7 +106,60 @@ Route::prefix('admin')
 		->name('service.destroy');
 	});
 
-	// Место для блока "о нас"
+	// Добавляем префикс 'about'. Блок "о нас".
+	Route::prefix('about')->group(function () {
+	
+		// Список удобств
+		Route::get('/',
+			[AboutBlockController::class, 'index']
+		)->name('aboutBlock.index');
+	
+		// Форма для редактирования записи
+		Route::get('/edit/{aboutBlock}',
+			// указание на контроллер и метод
+			[AboutBlockController::class, 'edit']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('aboutBlock')
+		// наименование маршрута
+		->name('aboutBlock.edit');
+	
+		// Обработка данных, полученных от формы
+		Route::post('/update/{aboutBlock}',
+			// указание на контроллер и метод
+			[AboutBlockController::class, 'update']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('aboutBlock')
+		// наименование маршрута
+		->name('aboutBlock.update');
+	
+		// Форма для создания новой записи
+		Route::get('/create',
+			// указание на контроллер и метод
+			[AboutBlockController::class, 'create']
+		)
+		// наименование маршрута
+		->name('aboutBlock.create');
+	
+		// Обработка данных, полученных от формы создания
+		Route::post('/store',
+			// указание на контроллер и метод
+			[AboutBlockController::class, 'store']
+		)
+		// наименование маршрута
+		->name('aboutBlock.store');
+	
+		// Удаление записи
+		Route::get('/destroy/{aboutBlock}',
+			// указание на контроллер и метод
+			[AboutBlockController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('aboutBlock')
+		// наименование маршрута
+		->name('aboutBlock.destroy');
+	});
 
 	// Добавляем префикс 'amenities'. Блок с удобствами.
 	Route::prefix('amenities')->group(function () {

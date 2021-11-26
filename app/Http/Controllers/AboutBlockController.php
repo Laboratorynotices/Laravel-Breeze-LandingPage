@@ -12,9 +12,13 @@ class AboutBlockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // Считываем все данные из таблицы "AboutBlock".
+        $aboutBlocks = AboutBlock::all();
+
+        return view('aboutBlock.index')
+            // пересылаем переменные в вид
+            ->with('aboutBlocks', $aboutBlocks);
     }
 
     /**
@@ -78,8 +82,10 @@ class AboutBlockController extends Controller
      * @param  \App\Models\AboutBlock  $aboutBlock
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AboutBlock $aboutBlock)
-    {
-        //
+    public function destroy(AboutBlock $aboutBlock) {
+        // Удаляем данные
+        $aboutBlock->delete();
+     
+        return redirect()->route('aboutBlock.index');
     }
 }
