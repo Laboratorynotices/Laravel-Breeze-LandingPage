@@ -10,6 +10,8 @@ use App\Http\Controllers\AboutBlockController;
 use App\Models\AboutBlock;
 use App\Http\Controllers\AmenityController;
 use App\Models\Amenity;
+use App\Http\Controllers\EmployeeController;
+use App\Models\Employee;
 use App\Http\Controllers\ExerciseController;
 use App\Models\Exercise;
 use App\Http\Controllers\ServiceController;
@@ -216,8 +218,64 @@ Route::prefix('admin')
 		->name('amenity.destroy');
 	});
 
-	// Место для блоков портфолио и сотрудников
 
+	// Место для блоков портфолио
+
+
+	// Добавляем префикс 'employees'. Блок с сотрудниками.
+	Route::prefix('employees')->group(function () {
+
+		// Список удобств
+		Route::get('/',
+			[EmployeeController::class, 'index']
+		)->name('employee.index');
+
+		// Форма для редактирования записи
+		Route::get('/edit/{employee}',
+			// указание на контроллер и метод
+			[EmployeeController::class, 'edit']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('employee')
+		// наименование маршрута
+		->name('employee.edit');
+
+		// Обработка данных, полученных от формы
+		Route::post('/update/{employee}',
+			// указание на контроллер и метод
+			[EmployeeController::class, 'update']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('employee')
+		// наименование маршрута
+		->name('employee.update');
+
+		// Форма для создания новой записи
+		Route::get('/create',
+			// указание на контроллер и метод
+			[EmployeeController::class, 'create']
+		)
+		// наименование маршрута
+		->name('employee.create');
+
+		// Обработка данных, полученных от формы создания
+		Route::post('/store',
+			// указание на контроллер и метод
+			[EmployeeController::class, 'store']
+		)
+		// наименование маршрута
+		->name('exercemployeeise.store');
+
+		// Удаление записи
+		Route::get('/destroy/{employee}',
+			// указание на контроллер и метод
+			[EmployeeController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('employee')
+		// наименование маршрута
+		->name('employee.destroy');
+	});
 
 	// Добавляем префикс 'exercises'. Блок с удобствами.
 	Route::prefix('exercises')->group(function () {

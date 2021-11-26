@@ -12,9 +12,13 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // Считываем все данные из таблицы "Employees".
+        $employees = Employee::all();
+
+        return view('employee.index')
+            // пересылаем переменные в вид
+            ->with('employees', $employees);
     }
 
     /**
@@ -78,8 +82,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
-    {
-        //
+    public function destroy(Employee $employee) {
+        // Удаляем данные
+        $employee->delete();
+     
+        return redirect()->route('employee.index');
     }
 }
