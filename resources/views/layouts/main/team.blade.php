@@ -12,7 +12,7 @@
 			@foreach ($employees as $employee)
 			<div class="col-lg-3 col-sm-6 mb-5"> 
 				<figure data-aos="fade-up" data-aos-easing="linear" data-aos-delay="{{ 1 + $loop->index }}00">
-					<img class="w-100 rounded-top" src="{{ asset('img/team/img' . $employee->image) }}" alt="Image Description"> 
+					<img class="w-100 rounded-top" src="{{ asset('img/team/' . $employee->image) }}" alt="Image Description"> 
 					<div class="wt-box-shadow-sm bg-white text-center rounded p-4">
 						<div class="mb-3">
 							<h5 class="mb-1">{{ $employee->name }}</h5>

@@ -264,7 +264,7 @@ Route::prefix('admin')
 			[EmployeeController::class, 'store']
 		)
 		// наименование маршрута
-		->name('exercemployeeise.store');
+		->name('employee.store');
 
 		// Удаление записи
 		Route::get('/destroy/{employee}',
