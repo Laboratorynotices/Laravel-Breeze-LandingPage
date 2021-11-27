@@ -56,12 +56,14 @@ Route::prefix('admin')
 	->group(function () {
 
 	// Добавляем префикс 'service'. Блок с сервисами (услугами).
-	Route::prefix('service')->group(function () {
+	Route::prefix('service')
+		->name('service.')
+		->group(function () {
 	
 		// Список удобств
 		Route::get('/',
 			[ServiceController::class, 'index']
-		)->name('service.index');
+		)->name('index');
 	
 		// Форма для редактирования записи
 		Route::get('/edit/{service}',
@@ -71,7 +73,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('service')
 		// наименование маршрута
-		->name('service.edit');
+		->name('edit');
 	
 		// Обработка данных, полученных от формы
 		Route::post('/update/{service}',
@@ -81,7 +83,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('service')
 		// наименование маршрута
-		->name('service.update');
+		->name('update');
 	
 		// Форма для создания новой записи
 		Route::get('/create',
@@ -89,7 +91,7 @@ Route::prefix('admin')
 			[ServiceController::class, 'create']
 		)
 		// наименование маршрута
-		->name('service.create');
+		->name('create');
 	
 		// Обработка данных, полученных от формы создания
 		Route::post('/store',
@@ -97,7 +99,7 @@ Route::prefix('admin')
 			[ServiceController::class, 'store']
 		)
 		// наименование маршрута
-		->name('service.store');
+		->name('store');
 	
 		// Удаление записи
 		Route::get('/destroy/{service}',
@@ -107,16 +109,18 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('service')
 		// наименование маршрута
-		->name('service.destroy');
+		->name('destroy');
 	});
 
 	// Добавляем префикс 'about'. Блок "о нас".
-	Route::prefix('about')->group(function () {
+	Route::prefix('about')
+		->name('aboutBlock.')
+		->group(function () {
 	
 		// Список удобств
 		Route::get('/',
 			[AboutBlockController::class, 'index']
-		)->name('aboutBlock.index');
+		)->name('index');
 	
 		// Форма для редактирования записи
 		Route::get('/edit/{aboutBlock}',
@@ -126,7 +130,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('aboutBlock')
 		// наименование маршрута
-		->name('aboutBlock.edit');
+		->name('edit');
 	
 		// Обработка данных, полученных от формы
 		Route::post('/update/{aboutBlock}',
@@ -136,7 +140,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('aboutBlock')
 		// наименование маршрута
-		->name('aboutBlock.update');
+		->name('update');
 	
 		// Форма для создания новой записи
 		Route::get('/create',
@@ -144,7 +148,7 @@ Route::prefix('admin')
 			[AboutBlockController::class, 'create']
 		)
 		// наименование маршрута
-		->name('aboutBlock.create');
+		->name('create');
 	
 		// Обработка данных, полученных от формы создания
 		Route::post('/store',
@@ -152,7 +156,7 @@ Route::prefix('admin')
 			[AboutBlockController::class, 'store']
 		)
 		// наименование маршрута
-		->name('aboutBlock.store');
+		->name('store');
 	
 		// Удаление записи
 		Route::get('/destroy/{aboutBlock}',
@@ -162,16 +166,18 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('aboutBlock')
 		// наименование маршрута
-		->name('aboutBlock.destroy');
+		->name('destroy');
 	});
 
 	// Добавляем префикс 'amenities'. Блок с удобствами.
-	Route::prefix('amenities')->group(function () {
+	Route::prefix('amenities')
+		->name('amenity.')
+		->group(function () {
 
 		// Список удобств
 		Route::get('/',
 			[AmenityController::class, 'index']
-		)->name('amenity.index');
+		)->name('index');
 
 		// Форма для редактирования записи
 		Route::get('/edit/{amenity}',
@@ -181,7 +187,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('amenity')
 		// наименование маршрута
-		->name('amenity.edit');
+		->name('edit');
 
 		// Обработка данных, полученных от формы
 		Route::post('/update/{amenity}',
@@ -191,7 +197,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('amenity')
 		// наименование маршрута
-		->name('amenity.update');
+		->name('update');
 
 		// Форма для создания новой записи
 		Route::get('/create',
@@ -199,7 +205,7 @@ Route::prefix('admin')
 			[AmenityController::class, 'create']
 		)
 		// наименование маршрута
-		->name('amenity.create');
+		->name('create');
 
 		// Обработка данных, полученных от формы создания
 		Route::post('/store',
@@ -207,7 +213,7 @@ Route::prefix('admin')
 			[AmenityController::class, 'store']
 		)
 		// наименование маршрута
-		->name('amenity.store');
+		->name('store');
 
 		// Удаление записи
 		Route::get('/destroy/{amenity}',
@@ -217,7 +223,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('amenity')
 		// наименование маршрута
-		->name('amenity.destroy');
+		->name('destroy');
 	});
 
 
@@ -225,12 +231,14 @@ Route::prefix('admin')
 
 
 	// Добавляем префикс 'employees'. Блок с сотрудниками.
-	Route::prefix('employees')->group(function () {
+	Route::prefix('employees')
+		->name('employee.')
+		->group(function () {
 
 		// Список удобств
 		Route::get('/',
 			[EmployeeController::class, 'index']
-		)->name('employee.index');
+		)->name('index');
 
 		// Форма для редактирования записи
 		Route::get('/edit/{employee}',
@@ -240,7 +248,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('employee')
 		// наименование маршрута
-		->name('employee.edit');
+		->name('edit');
 
 		// Обработка данных, полученных от формы
 		Route::post('/update/{employee}',
@@ -250,7 +258,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('employee')
 		// наименование маршрута
-		->name('employee.update');
+		->name('update');
 
 		// Форма для создания новой записи
 		Route::get('/create',
@@ -258,7 +266,7 @@ Route::prefix('admin')
 			[EmployeeController::class, 'create']
 		)
 		// наименование маршрута
-		->name('employee.create');
+		->name('create');
 
 		// Обработка данных, полученных от формы создания
 		Route::post('/store',
@@ -266,7 +274,7 @@ Route::prefix('admin')
 			[EmployeeController::class, 'store']
 		)
 		// наименование маршрута
-		->name('employee.store');
+		->name('store');
 
 		// Удаление записи
 		Route::get('/destroy/{employee}',
@@ -276,16 +284,18 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('employee')
 		// наименование маршрута
-		->name('employee.destroy');
+		->name('destroy');
 	});
 
 	// Добавляем префикс 'exercises'. Блок с удобствами.
-	Route::prefix('exercises')->group(function () {
+	Route::prefix('exercises')
+		->name('exercise.')
+		->group(function () {
 
 		// Список удобств
 		Route::get('/',
 			[ExerciseController::class, 'index']
-		)->name('exercise.index');
+		)->name('index');
 
 		// Форма для редактирования записи
 		Route::get('/edit/{exercise}',
@@ -295,7 +305,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('exercise')
 		// наименование маршрута
-		->name('exercise.edit');
+		->name('edit');
 
 		// Обработка данных, полученных от формы
 		Route::post('/update/{exercise}',
@@ -305,7 +315,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('exercise')
 		// наименование маршрута
-		->name('exercise.update');
+		->name('update');
 
 		// Форма для создания новой записи
 		Route::get('/create',
@@ -313,7 +323,7 @@ Route::prefix('admin')
 			[ExerciseController::class, 'create']
 		)
 		// наименование маршрута
-		->name('exercise.create');
+		->name('create');
 
 		// Обработка данных, полученных от формы создания
 		Route::post('/store',
@@ -321,7 +331,7 @@ Route::prefix('admin')
 			[ExerciseController::class, 'store']
 		)
 		// наименование маршрута
-		->name('exercise.store');
+		->name('store');
 
 		// Удаление записи
 		Route::get('/destroy/{exercise}',
@@ -331,7 +341,7 @@ Route::prefix('admin')
 		// фильтр по входящему параметру
 		->whereNumber('exercise')
 		// наименование маршрута
-		->name('exercise.destroy');
+		->name('destroy');
 	});
 
 	// Добавляем префикс 'testimonials'. Блок с удобствами.

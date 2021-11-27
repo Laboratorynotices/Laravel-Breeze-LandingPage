@@ -26,10 +26,9 @@ class TestimonialController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
-		//
-	}
+	public function create() {
+        return view('testimonial.form');
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -37,10 +36,26 @@ class TestimonialController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
-	{
-		//
-	}
+	public function store(Request $request) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
+
+        // Сохраняем загруженную картинку
+        $input['image'] = $this->storeImage($request, 'image', 'ava');
+
+        // создаём новый объект модели услуг
+        $testimonial = new Testimonial();
+
+        // заполняем наш объект полученными данными
+        $testimonial->fill($input);
+
+        // Сохраняем данные
+        $testimonial->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('testimonial.index');
+    }
 
 	/**
 	 * Display the specified resource.
@@ -59,10 +74,11 @@ class TestimonialController extends Controller
 	 * @param  \App\Models\Testimonial  $testimonial
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Testimonial $testimonial)
-	{
-		//
-	}
+	public function edit(Testimonial $testimonial) {
+        return view('testimonial.form')
+            // пересылаем переменные в вид
+            ->with('testimonial', $testimonial);
+    }
 
 	/**
 	 * Update the specified resource in storage.
@@ -71,10 +87,25 @@ class TestimonialController extends Controller
 	 * @param  \App\Models\Testimonial  $testimonial
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Testimonial $testimonial)
-	{
-		//
-	}
+	public function update(Request $request, Testimonial $testimonial) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request, true);
+
+        // обновляем картинку, если она была загружена
+        if ($request->hasFile('image')) {
+            $input['image'] = $this->storeImage($request, 'image', 'ava');
+        }
+
+        // заполняем наш объект полученными данными
+        $testimonial->fill($input);
+
+        // Сохраняем данные
+        $testimonial->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('testimonial.index');
+    }
 
 	/**
 	 * Remove the specified resource from storage.
@@ -87,5 +118,52 @@ class TestimonialController extends Controller
         $testimonial->delete();
      
         return redirect()->route('testimonial.index');
+    }
+
+
+    /**
+     * Валидация данных, которые получаем от формы
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool $update - определяет из какого метода вызывается этот метод.
+     * @return array()
+     */
+    private function getValidatedData(Request $request, bool $update = false) {
+        // @TODO Валидация id???
+        return $request->validate([
+            'name'          => 'required|max:100',
+            'position'	 	=> 'required|max:100',
+            'image'         =>
+                // При создании записи картинка обязательна, но не при обновлении.
+                ((!$update) ?
+                    'required|' :
+                    '').
+                'image',
+            'text'          => 'required|max:999',
+        ]);
+    }
+
+
+    /**
+     * Сохраняет картинку, загруженную через форму.
+     * Возвращает оригинальное название загруженного файла.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $fieldName - имя поля, через который загружается файл
+     * @param  String $folderName - имя папки, в которую загружается файл
+     * @return String - оригинальное название загруженного файла.
+     */
+    private function storeImage(Request $request, String $fieldName, String $folderName = '') {
+        // обновляем картинку, если она была загружена
+        if ($request->hasFile($fieldName)) {
+            // запоминаем оригинальное название файла
+            $originalName = $request->file($fieldName)->getClientOriginalName();
+            // сохраняем загруженный файл в папку $folderName с оригинальным названием
+            $request->file($fieldName)->storePubliclyAs($folderName, $originalName);
+            // готовим название файла к заполнению в модель.
+            return $originalName;
+        }
+
+        return '';
     }
 }

@@ -41,8 +41,12 @@ class LandingPageController extends Controller
 		// Считываем все данные из таблицы "Занятия".
 		$exercises = Exercise::all();
 
+		/*
 		// Считываем все данные из таблицы "Отзывы".
 		$testimonials = Testimonial::all();
+		*/
+		// Считываем две случайные записи из таблицы "Отзывы".
+		$testimonials = Testimonial::inRandomOrder()->limit(2)->get();
 
 		return view('main', $data)
 			// пересылаем переменные в вид
