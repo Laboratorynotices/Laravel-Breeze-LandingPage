@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Testimonials;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
@@ -12,10 +12,14 @@ class TestimonialController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
-	{
-		//
-	}
+	public function index() {
+        // Считываем все данные из таблицы "testimonials".
+        $testimonials = Testimonial::all();
+
+        return view('testimonial.index')
+            // пересылаем переменные в вид
+            ->with('testimonials', $testimonials);
+    }
 
 	/**
 	 * Show the form for creating a new resource.
@@ -41,10 +45,10 @@ class TestimonialController extends Controller
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  \App\Models\Testimonials  $testimonials
+	 * @param  \App\Models\Testimonial  $testimonial
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Testimonials $testimonials)
+	public function show(Testimonial $testimonial)
 	{
 		//
 	}
@@ -52,10 +56,10 @@ class TestimonialController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  \App\Models\Testimonials  $testimonials
+	 * @param  \App\Models\Testimonial  $testimonial
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Testimonials $testimonials)
+	public function edit(Testimonial $testimonial)
 	{
 		//
 	}
@@ -64,10 +68,10 @@ class TestimonialController extends Controller
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\Testimonials  $testimonials
+	 * @param  \App\Models\Testimonial  $testimonial
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Testimonials $testimonials)
+	public function update(Request $request, Testimonial $testimonial)
 	{
 		//
 	}
@@ -78,8 +82,10 @@ class TestimonialController extends Controller
 	 * @param  \App\Models\Testimonials  $testimonials
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Testimonials $testimonials)
-	{
-		//
-	}
+	public function destroy(Testimonial $testimonial) {
+        // Удаляем данные
+        $testimonial->delete();
+     
+        return redirect()->route('testimonial.index');
+    }
 }

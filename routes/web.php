@@ -16,6 +16,8 @@ use App\Http\Controllers\ExerciseController;
 use App\Models\Exercise;
 use App\Http\Controllers\ServiceController;
 use App\Models\Service;
+use App\Http\Controllers\TestimonialController;
+use App\Models\Testimonial;
 
 
 /*
@@ -332,6 +334,62 @@ Route::prefix('admin')
 		->name('exercise.destroy');
 	});
 
+	// Добавляем префикс 'testimonials'. Блок с удобствами.
+	Route::prefix('testimonials')
+		->name('testimonial.')
+		->group(function () {
+
+		// Список удобств
+		Route::get('/',
+			[TestimonialController::class, 'index']
+		)->name('index');
+
+		// Форма для редактирования записи
+		Route::get('/edit/{testimonial}',
+			// указание на контроллер и метод
+			[TestimonialController::class, 'edit']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('testimonial')
+		// наименование маршрута
+		->name('edit');
+
+		// Обработка данных, полученных от формы
+		Route::post('/update/{testimonial}',
+			// указание на контроллер и метод
+			[TestimonialController::class, 'update']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('testimonial')
+		// наименование маршрута
+		->name('update');
+
+		// Форма для создания новой записи
+		Route::get('/create',
+			// указание на контроллер и метод
+			[TestimonialController::class, 'create']
+		)
+		// наименование маршрута
+		->name('create');
+
+		// Обработка данных, полученных от формы создания
+		Route::post('/store',
+			// указание на контроллер и метод
+			[TestimonialController::class, 'store']
+		)
+		// наименование маршрута
+		->name('store');
+
+		// Удаление записи
+		Route::get('/destroy/{testimonial}',
+			// указание на контроллер и метод
+			[TestimonialController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('testimonial')
+		// наименование маршрута
+		->name('destroy');
+	});
 
 	// Место для остальных блоков
 
