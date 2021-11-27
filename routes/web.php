@@ -10,6 +10,8 @@ use App\Http\Controllers\AboutBlockController;
 use App\Models\AboutBlock;
 use App\Http\Controllers\AmenityController;
 use App\Models\Amenity;
+use App\Http\Controllers\PortfolioFilterController;
+use App\Models\PortfolioFilter;
 use App\Http\Controllers\EmployeeController;
 use App\Models\Employee;
 use App\Http\Controllers\ExerciseController;
@@ -59,12 +61,12 @@ Route::prefix('admin')
 	Route::prefix('service')
 		->name('service.')
 		->group(function () {
-	
+
 		// Список удобств
 		Route::get('/',
 			[ServiceController::class, 'index']
 		)->name('index');
-	
+
 		// Форма для редактирования записи
 		Route::get('/edit/{service}',
 			// указание на контроллер и метод
@@ -74,7 +76,7 @@ Route::prefix('admin')
 		->whereNumber('service')
 		// наименование маршрута
 		->name('edit');
-	
+
 		// Обработка данных, полученных от формы
 		Route::post('/update/{service}',
 			// указание на контроллер и метод
@@ -169,7 +171,7 @@ Route::prefix('admin')
 		->name('destroy');
 	});
 
-	// Добавляем префикс 'amenities'. Блок с удобствами.
+	// Добавляем префикс 'amenities'. Блок с занятиями.
 	Route::prefix('amenities')
 		->name('amenity.')
 		->group(function () {
@@ -226,8 +228,65 @@ Route::prefix('admin')
 		->name('destroy');
 	});
 
+	// Добавляем префикс 'portfolio/filter'. Блок с группами портфолио.
+	Route::prefix('portfolio/filter')
+		->name('portfolio.filter.')
+		->group(function () {
 
-	// Место для блоков портфолио
+		// Список удобств
+		Route::get('/',
+			[PortfolioFilterController::class, 'index']
+		)->name('index');
+
+		// Форма для редактирования записи
+		Route::get('/edit/{portfolioFilter}',
+			// указание на контроллер и метод
+			[PortfolioFilterController::class, 'edit']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('portfolioFilter')
+		// наименование маршрута
+		->name('edit');
+
+		// Обработка данных, полученных от формы
+		Route::post('/update/{portfolioFilter}',
+			// указание на контроллер и метод
+			[PortfolioFilterController::class, 'update']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('portfolioFilter')
+		// наименование маршрута
+		->name('update');
+
+		// Форма для создания новой записи
+		Route::get('/create',
+			// указание на контроллер и метод
+			[PortfolioFilterController::class, 'create']
+		)
+		// наименование маршрута
+		->name('create');
+
+		// Обработка данных, полученных от формы создания
+		Route::post('/store',
+			// указание на контроллер и метод
+			[PortfolioFilterController::class, 'store']
+		)
+		// наименование маршрута
+		->name('store');
+
+		// Удаление записи
+		Route::get('/destroy/{portfolioFilter}',
+			// указание на контроллер и метод
+			[PortfolioFilterController::class, 'destroy']
+		)
+		// фильтр по входящему параметру
+		->whereNumber('portfolioFilter')
+		// наименование маршрута
+		->name('destroy');
+	});
+
+
+	// Место для блока портфолио
 
 
 	// Добавляем префикс 'employees'. Блок с сотрудниками.
@@ -344,7 +403,7 @@ Route::prefix('admin')
 		->name('destroy');
 	});
 
-	// Добавляем префикс 'testimonials'. Блок с удобствами.
+	// Добавляем префикс 'testimonials'. Блок с отзывами.
 	Route::prefix('testimonials')
 		->name('testimonial.')
 		->group(function () {

@@ -28,8 +28,8 @@
 				</a>
 			</div>
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">
-				<a href="#" class="btn btn-light shadow">
-					use App\Models\PortfolioFilter;
+				<a href="{{ route('portfolio.filter.index') }}" class="btn btn-light shadow w-100 h-100">
+					{{ __('Portfolio Filters') }}
 				</a>
 			</div>
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-3 p-3">

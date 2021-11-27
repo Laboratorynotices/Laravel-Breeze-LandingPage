@@ -12,9 +12,13 @@ class PortfolioFilterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // Считываем все данные из таблицы "Занятий".
+        $portfolioFilters = PortfolioFilter::all();
+
+        return view('portfolioFilter.index')
+            // пересылаем переменные в вид
+            ->with('portfolioFilters', $portfolioFilters);
     }
 
     /**
@@ -78,8 +82,12 @@ class PortfolioFilterController extends Controller
      * @param  \App\Models\PortfolioFilter  $portfolioFilter
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PortfolioFilter $portfolioFilter)
-    {
-        //
+    public function destroy(PortfolioFilter $portfolioFilter) {
+        // Удаляем данные
+        $portfolioFilter->delete();
+
+        // @TODO обработка, если удаление данных не получится
+
+        return redirect()->route('portfolioFilter.index');
     }
 }
