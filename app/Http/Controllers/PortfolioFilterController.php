@@ -26,9 +26,8 @@ class PortfolioFilterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('portfolioFilter.form');
     }
 
     /**
@@ -37,9 +36,22 @@ class PortfolioFilterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request);
+
+        // создаём новый объект модели услуг
+        $portfolioFilter = new PortfolioFilter();
+
+        // заполняем наш объект полученными данными
+        $portfolioFilter->fill($input);
+
+        // Сохраняем данные
+        $portfolioFilter->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('portfolio.filter.index');
     }
 
     /**
@@ -59,9 +71,10 @@ class PortfolioFilterController extends Controller
      * @param  \App\Models\PortfolioFilter  $portfolioFilter
      * @return \Illuminate\Http\Response
      */
-    public function edit(PortfolioFilter $portfolioFilter)
-    {
-        //
+    public function edit(PortfolioFilter $portfolioFilter) {
+        return view('portfolioFilter.form')
+            // пересылаем переменные в вид
+            ->with('portfolioFilter', $portfolioFilter);
     }
 
     /**
@@ -71,9 +84,19 @@ class PortfolioFilterController extends Controller
      * @param  \App\Models\PortfolioFilter  $portfolioFilter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PortfolioFilter $portfolioFilter)
-    {
-        //
+    public function update(Request $request, PortfolioFilter $portfolioFilter) {
+        // Получаем входящие данные, которые пройдут валидацию.
+        $input = $this->getValidatedData($request, true);
+
+        // заполняем наш объект полученными данными
+        $portfolioFilter->fill($input);
+
+        // Сохраняем данные
+        $portfolioFilter->save();
+
+        // @TODO обработка, если запись данных не получится
+
+        return redirect()->route('portfolio.filter.index');
     }
 
     /**
@@ -88,6 +111,22 @@ class PortfolioFilterController extends Controller
 
         // @TODO обработка, если удаление данных не получится
 
-        return redirect()->route('portfolioFilter.index');
+        return redirect()->route('portfolio.filter.index');
+    }
+
+
+    /**
+     * Валидация данных, которые получаем от формы
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool $update - определяет из какого метода вызывается этот метод.
+     * @return array()
+     */
+    private function getValidatedData(Request $request, bool $update = false) {
+        // @TODO Валидация id???
+        return $request->validate([
+            'full_name'     => 'required|max:100',
+            'short_name'	=> 'required|max:100',
+        ]);
     }
 }
