@@ -12,9 +12,13 @@ class PortfolioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // Считываем все данные из таблицы "Portfolio".
+        $portfolios = Portfolio::all();
+
+        return view('portfolio.index')
+            // пересылаем переменные в вид
+            ->with('portfolios', $portfolios);
     }
 
     /**
@@ -78,8 +82,10 @@ class PortfolioController extends Controller
      * @param  \App\Models\Portfolio  $portfolio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Portfolio $portfolio)
-    {
-        //
+    public function destroy(Portfolio $portfolio) {
+        // Удаляем данные
+        $portfolio->delete();
+     
+        return redirect()->route('portfolio.index');
     }
 }

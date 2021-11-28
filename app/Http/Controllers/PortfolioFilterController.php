@@ -86,7 +86,7 @@ class PortfolioFilterController extends Controller
      */
     public function update(Request $request, PortfolioFilter $portfolioFilter) {
         // Получаем входящие данные, которые пройдут валидацию.
-        $input = $this->getValidatedData($request, true);
+        $input = $this->getValidatedData($request);
 
         // заполняем наш объект полученными данными
         $portfolioFilter->fill($input);
@@ -119,10 +119,9 @@ class PortfolioFilterController extends Controller
      * Валидация данных, которые получаем от формы
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  bool $update - определяет из какого метода вызывается этот метод.
      * @return array()
      */
-    private function getValidatedData(Request $request, bool $update = false) {
+    private function getValidatedData(Request $request) {
         // @TODO Валидация id???
         return $request->validate([
             'full_name'     => 'required|max:100',
