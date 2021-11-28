@@ -9,6 +9,8 @@ class Portfolio extends Model
 {
 	use HasFactory;
 
+	protected $fillable = ['image', 'portfolio_filter_id'];
+
 	/**
 	 * Отношение к одному фильтру
 	 */
